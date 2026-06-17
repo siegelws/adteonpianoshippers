@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!-- ============ SEO ============ -->
-<title>Piano Movers USA, UK &amp; Canada | Grand &amp; Upright Piano Moving Services — Adteon Piano Shippers</title>
-<meta name="description" content="Adteon Piano Shippers — certified, fully insured piano moving services across the US, UK &amp; Canada. White-glove upright, baby grand &amp; grand piano transportation, relocation, storage &amp; international piano shipping. Get a free quote today." />
+<title>Piano Movers USA, UK, Canada &amp; Australia | Grand &amp; Upright Piano Moving Services — Adteon Piano Shippers</title>
+<meta name="description" content="Adteon Piano Shippers — certified, fully insured piano moving services across the US, UK, Canada &amp; Australia. White-glove upright, baby grand &amp; grand piano transportation, relocation, storage &amp; international piano shipping. Get a free quote today." />
 <meta name="keywords" content="piano movers, piano moving services, grand piano movers, upright piano moving, piano transportation, piano relocation services, piano movers near me, piano shipping company, piano moving company, international piano movers, piano movers USA, piano movers Canada, piano movers UK" />
 <meta name="theme-color" content="#0b1a3a" />
 <meta name="robots" content="index, follow" />
@@ -15,7 +15,7 @@
 <!-- ============ Open Graph ============ -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Adteon Piano Shippers" />
-<meta property="og:title" content="Professional Piano Moving Services Across the US, UK &amp; Canada" />
+<meta property="og:title" content="Professional Piano Moving Services Across the US, UK, Canada &amp; Australia" />
 <meta property="og:description" content="Certified, fully insured white-glove piano movers. Upright, baby grand &amp; grand piano transport, storage &amp; international shipping. 2,800+ successful moves." />
 <meta property="og:image" content="d8c6cc53c27a184e9b63ae9ba6797613.jpg" />
 <meta property="og:url" content="https://www.adteonpianoshippers.com/" />
@@ -23,7 +23,7 @@
 
 <!-- ============ Twitter ============ -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Adteon Piano Shippers — White-Glove Piano Moving, US · UK · Canada" />
+<meta name="twitter:title" content="Adteon Piano Shippers — White-Glove Piano Moving, US · UK · Canada · Australia" />
 <meta name="twitter:description" content="Certified, fully insured piano movers. Free quotes for upright, baby grand, grand &amp; international piano moves." />
 <meta name="twitter:image" content="d8c6cc53c27a184e9b63ae9ba6797613.jpg" />
 
@@ -41,7 +41,7 @@
   "url": "https://www.adteonpianoshippers.com/",
   "telephone": "+1-888-726-6466",
   "priceRange": "$$$",
-  "areaServed": ["United States", "United Kingdom", "Canada"],
+  "areaServed": ["United States", "United Kingdom", "Canada", "Australia"],
   "knowsAbout": ["Grand piano moving", "Upright piano moving", "Baby grand piano moving", "International piano shipping", "Piano storage"],
   "aggregateRating": {
     "@type": "AggregateRating",
@@ -69,7 +69,7 @@
   "@type": "Service",
   "serviceType": "Piano Moving Services",
   "provider": { "@type": "MovingCompany", "name": "Adteon Piano Shippers" },
-  "areaServed": ["US","UK","Canada"],
+  "areaServed": ["US","UK","Canada","Australia"],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
     "name": "Piano Moving Services",
@@ -342,7 +342,7 @@ section{position:relative}
 .coverage{background:var(--navy-deep);color:#fff}
 .coverage .sec-title{color:#fff}
 .coverage .index{color:var(--gold-bright)}
-.cov-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:10px}
+.cov-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:10px}
 .cov-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px;transition:.4s}
 .cov-card:hover{background:rgba(255,255,255,.07);border-color:rgba(230,200,120,.4);transform:translateY(-6px)}
 .cov-card .flag{font-size:30px;margin-bottom:14px;display:block}
@@ -454,6 +454,19 @@ section{position:relative}
 .field textarea{resize:vertical;min-height:90px}
 .form-card .btn-gold{width:100%;justify-content:center;margin-top:8px;padding:17px}
 .form-note{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;margin-top:14px}
+.field label .req{color:var(--gold);font-weight:700;margin-left:2px}
+.field input:required:focus{box-shadow:0 0 0 4px rgba(201,162,75,.13)}
+.autocomplete{position:relative}
+.ac-list{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:30;background:#fff;border:1px solid var(--line);border-radius:13px;
+  box-shadow:0 26px 55px -20px rgba(8,14,30,.5);overflow:hidden auto;max-height:248px;display:none}
+.ac-list.show{display:block;animation:acIn .18s ease}
+@keyframes acIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.ac-item{padding:11px 14px;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:11px;transition:background .15s;border-bottom:1px solid var(--line-2)}
+.ac-item:last-child{border-bottom:none}
+.ac-item:hover,.ac-item.active{background:rgba(201,162,75,.13)}
+.ac-item svg{width:16px;height:16px;stroke:var(--gold);flex:none}
+.ac-item .ac-city{color:var(--text)}
+.ac-item .ac-city b{color:#8a6a1f;font-weight:700;background:rgba(201,162,75,.2);border-radius:3px;padding:0 1px}
 .form-success{display:none;text-align:center;padding:30px 10px}
 .form-success.show{display:block}
 .form-success .circle{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--gold-bright),var(--gold));display:grid;place-items:center;margin:0 auto 20px}
@@ -497,7 +510,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
   .choose-grid{grid-template-columns:repeat(2,1fr)}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .stat:nth-child(2){border-right:none}
-  .cov-grid{grid-template-columns:1fr}
+  .cov-grid{grid-template-columns:repeat(2,1fr)}
   .tslide{grid-template-columns:1fr}
   .faq-grid{grid-template-columns:1fr;gap:30px}
   .faq-aside{position:static}
@@ -524,6 +537,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
   .steps{grid-template-columns:1fr}
   .foot-top{grid-template-columns:1fr}
   .sec{padding:52px 0}
+  .cov-grid{grid-template-columns:1fr}
   .emergency{padding:44px 26px}
   .finalcta{padding:74px 24px}
 }
@@ -538,7 +552,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
       <span class="brand-mark">
         <svg viewBox="0 0 24 24" fill="none"><g stroke="#e6c878" stroke-width="1.5"><path d="M4 6h16v9a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"/><path d="M8 6v6M12 6v6M16 6v6" stroke-linecap="round"/></g></svg>
       </span>
-      <span class="brand-name">ADTEON PIANO<small>SHIPPERS · US · UK · CA</small></span>
+      <span class="brand-name">ADTEON PIANO<small>SHIPPERS · US · UK · CA · AU</small></span>
     </a>
     <nav class="nav-links">
       <a href="#services">services <span class="arr">↗</span></a>
@@ -588,7 +602,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
           <span class="lbl gold">[ EST. 2001 · 2,800+ MOVES ]</span>
           <h1 class="hero-h1">
             Professional <span class="it">piano</span> Moving<br>
-            <span class="slash">//</span> Across The US, UK <span class="it">&amp;</span> Canada
+            <span class="slash">//</span> Across The US, UK, CA <span class="it">&amp;</span> AU
           </h1>
           <p class="hero-sub">Whether you're moving an upright across town, transporting a baby grand across the country, or relocating a concert grand internationally — our certified movers ensure your instrument arrives safely, securely, and on time.</p>
           <div class="hero-actions">
@@ -806,8 +820,8 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
   <div class="wrap">
     <div class="sec-head center reveal">
       <span class="index">— GLOBAL REACH</span>
-      <h2 class="sec-title">Serving Customers Across North America <span class="it">&amp;</span> The UK</h2>
-      <p class="sec-sub" style="margin:0 auto">Three countries, one standard of care. Door-to-door coverage in every major city and everywhere in between.</p>
+      <h2 class="sec-title">Serving Customers Across North America, the UK <span class="it">&amp;</span> Australia</h2>
+      <p class="sec-sub" style="margin:0 auto">Four countries, one standard of care. Door-to-door coverage in every major city and everywhere in between.</p>
     </div>
     <div class="cov-grid">
       <div class="cov-card reveal">
@@ -827,6 +841,12 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
         <h3>United Kingdom</h3>
         <span class="country-lbl">ENGLAND · SCOTLAND · WALES</span>
         <div class="cities"><span>London</span><span>Manchester</span><span>Birmingham</span><span>Glasgow</span><span>Liverpool</span></div>
+      </div>
+      <div class="cov-card reveal d3">
+        <span class="flag">🇦🇺</span>
+        <h3>Australia</h3>
+        <span class="country-lbl">NATIONWIDE · ALL STATES</span>
+        <div class="cities"><span>Sydney</span><span>Melbourne</span><span>Brisbane</span><span>Perth</span><span>Adelaide</span></div>
       </div>
     </div>
     <p class="cov-foot reveal">✦ NATIONWIDE COVERAGE AVAILABLE — IF YOU HAVE A PIANO, WE CAN MOVE IT ✦</p>
@@ -883,7 +903,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
       <div class="stat reveal"><div class="num" data-target="2800" data-suffix="+">0</div><div class="lbl2">Pianos Moved</div></div>
       <div class="stat reveal d1"><div class="num" data-target="25" data-suffix="+">0</div><div class="lbl2">Years Experience</div></div>
       <div class="stat reveal d2"><div class="num" data-target="98" data-suffix="%">0</div><div class="lbl2">Customer Satisfaction</div></div>
-      <div class="stat reveal d3"><div class="num" data-target="3" data-suffix=" Countries">0</div><div class="lbl2">Service Coverage</div></div>
+      <div class="stat reveal d3"><div class="num" data-target="4" data-suffix=" Countries">0</div><div class="lbl2">Service Coverage</div></div>
     </div>
   </div>
 </section>
@@ -973,7 +993,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
   <div class="wrap">
     <div class="finalcta reveal">
       <h2>Your Piano Deserves <span class="it">Professional</span> Care</h2>
-      <p>Trust our experienced piano movers to safely transport your instrument anywhere in the United States, Canada, or the United Kingdom.</p>
+      <p>Trust our experienced piano movers to safely transport your instrument anywhere in the United States, Canada, the United Kingdom, or Australia.</p>
       <div class="actions">
         <a href="#contact" class="btn btn-gold">Get Free Quote <span class="arr">↗</span></a>
         <a href="tel:+18887266466" class="btn btn-ghost-light">
@@ -1004,18 +1024,18 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
         </div>
         <div class="cinfo-item">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg></div>
-          <div><div class="lab">Service Area</div><div class="val">United States · United Kingdom · Canada</div></div>
+          <div><div class="lab">Service Area</div><div class="val">United States · United Kingdom · Canada · Australia</div></div>
         </div>
       </div>
 
       <div class="form-card reveal d1">
         <form id="quoteForm" novalidate>
           <div class="form-row">
-            <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" placeholder="Your full name" required></div>
-            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" placeholder="you@email.com" required></div>
+            <div class="field"><label for="f-name">Name <span class="req">*</span></label><input id="f-name" name="name" type="text" placeholder="Your full name" required></div>
+            <div class="field"><label for="f-email">Email <span class="req">*</span></label><input id="f-email" name="email" type="email" placeholder="you@email.com" required></div>
           </div>
           <div class="form-row">
-            <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" placeholder="+1 (___) ___-____" required></div>
+            <div class="field"><label for="f-phone">Phone <span class="req">*</span></label><input id="f-phone" name="phone" type="tel" placeholder="+1 (___) ___-____" required></div>
             <div class="field"><label for="f-type">Piano Type</label>
               <select id="f-type" name="pianoType">
                 <option value="">Select type…</option>
@@ -1030,8 +1050,12 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
             </div>
           </div>
           <div class="form-row">
-            <div class="field"><label for="f-pickup">Pickup Location</label><input id="f-pickup" name="pickup" type="text" placeholder="City, State / Country"></div>
-            <div class="field"><label for="f-delivery">Delivery Location</label><input id="f-delivery" name="delivery" type="text" placeholder="City, State / Country"></div>
+            <div class="field"><label for="f-pickup">Pickup Location</label>
+              <div class="autocomplete"><input id="f-pickup" class="ac-input" name="pickup" type="text" placeholder="Start typing a city…" autocomplete="off"><div class="ac-list" role="listbox"></div></div>
+            </div>
+            <div class="field"><label for="f-delivery">Delivery Location <span class="req">*</span></label>
+              <div class="autocomplete"><input id="f-delivery" class="ac-input" name="delivery" type="text" placeholder="Start typing a city…" autocomplete="off" required><div class="ac-list" role="listbox"></div></div>
+            </div>
           </div>
           <div class="field"><label for="f-date">Move Date</label><input id="f-date" name="moveDate" type="date"></div>
           <div class="field"><label for="f-message">Message</label><textarea id="f-message" name="message" placeholder="Stairs, access notes, special requirements…"></textarea></div>
@@ -1057,7 +1081,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
           <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><g stroke="#e6c878" stroke-width="1.5"><path d="M4 6h16v9a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"/><path d="M8 6v6M12 6v6M16 6v6" stroke-linecap="round"/></g></svg></span>
           <span class="brand-name" style="color:#fff">ADTEON PIANO SHIPPERS</span>
         </div>
-        <p>White-glove piano moving, storage and international shipping across the United States, United Kingdom and Canada. Your instrument, handled with the care it deserves.</p>
+        <p>White-glove piano moving, storage and international shipping across the United States, United Kingdom, Canada and Australia. Your instrument, handled with the care it deserves.</p>
         <div class="foot-badges">
           <span><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#e6c878" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg> Licensed</span>
           <span><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#e6c878" stroke-width="2"><path d="M12 2l9 4v6c0 5-3.8 8.5-9 10-5.2-1.5-9-5-9-10V6z"/></svg> Insured</span>
@@ -1077,6 +1101,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
         <a href="#coverage">🇺🇸 USA</a>
         <a href="#coverage">🇨🇦 Canada</a>
         <a href="#coverage">🇬🇧 UK</a>
+        <a href="#coverage">🇦🇺 Australia</a>
       </div>
       <div class="foot-col">
         <h4>Company</h4>
@@ -1088,7 +1113,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
     </div>
     <div class="foot-bottom">
       <p>© <span id="year"></span> Adteon Piano Shippers. All rights reserved.</p>
-      <p class="made">⟡ White-Glove Piano Logistics · US · UK · CA</p>
+      <p class="made">⟡ White-Glove Piano Logistics · US · UK · CA · AU</p>
     </div>
   </div>
 </footer>
@@ -1193,11 +1218,65 @@ document.querySelectorAll('.fitem').forEach(item => {
 });
 
 /* ===== form ===== */
+/* ===== location autocomplete (city, state/region, country) ===== */
+const PLACES = [
+  "New York, NY, USA","Los Angeles, CA, USA","Chicago, IL, USA","Houston, TX, USA","Phoenix, AZ, USA",
+  "Philadelphia, PA, USA","San Antonio, TX, USA","San Diego, CA, USA","Dallas, TX, USA","Austin, TX, USA",
+  "San Jose, CA, USA","Miami, FL, USA","Atlanta, GA, USA","Boston, MA, USA","Seattle, WA, USA",
+  "Denver, CO, USA","Washington, DC, USA","Nashville, TN, USA","Las Vegas, NV, USA","Portland, OR, USA",
+  "San Francisco, CA, USA","Charlotte, NC, USA","Detroit, MI, USA","Minneapolis, MN, USA","Orlando, FL, USA",
+  "Toronto, ON, Canada","Vancouver, BC, Canada","Calgary, AB, Canada","Montreal, QC, Canada","Ottawa, ON, Canada",
+  "Edmonton, AB, Canada","Winnipeg, MB, Canada","Quebec City, QC, Canada","Hamilton, ON, Canada","Halifax, NS, Canada",
+  "London, England, UK","Manchester, England, UK","Birmingham, England, UK","Leeds, England, UK","Liverpool, England, UK",
+  "Sheffield, England, UK","Bristol, England, UK","Newcastle, England, UK","Glasgow, Scotland, UK","Edinburgh, Scotland, UK",
+  "Cardiff, Wales, UK","Belfast, Northern Ireland, UK",
+  "Sydney, NSW, Australia","Melbourne, VIC, Australia","Brisbane, QLD, Australia","Perth, WA, Australia","Adelaide, SA, Australia",
+  "Gold Coast, QLD, Australia","Canberra, ACT, Australia","Newcastle, NSW, Australia","Hobart, TAS, Australia","Darwin, NT, Australia"
+];
+const PIN = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>';
+function setupAutocomplete(input){
+  const box = input.closest('.autocomplete');
+  const list = box.querySelector('.ac-list');
+  let items = [], active = -1;
+  const esc = s => s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  const close = () => { list.classList.remove('show'); list.innerHTML=''; active=-1; items=[]; };
+  const choose = v => { input.value = v; input.setCustomValidity(''); close(); };
+  const open = () => {
+    const q = input.value.trim().toLowerCase();
+    if (q.length < 1){ close(); return; }
+    items = PLACES.filter(p => p.toLowerCase().includes(q)).slice(0, 6);
+    if (!items.length){ close(); return; }
+    list.innerHTML = items.map(p => {
+      const i = p.toLowerCase().indexOf(q);
+      const hl = esc(p.slice(0,i)) + '<b>' + esc(p.slice(i,i+q.length)) + '</b>' + esc(p.slice(i+q.length));
+      return `<div class="ac-item" role="option">${PIN}<span class="ac-city">${hl}</span></div>`;
+    }).join('');
+    [...list.children].forEach((el,idx) => el.addEventListener('mousedown', ev => { ev.preventDefault(); choose(items[idx]); }));
+    list.classList.add('show');
+  };
+  const paint = () => [...list.children].forEach((el,i) => el.classList.toggle('active', i===active));
+  input.addEventListener('input', open);
+  input.addEventListener('focus', () => { if (input.value.trim()) open(); });
+  input.addEventListener('keydown', e => {
+    if (!list.classList.contains('show')) return;
+    if (e.key === 'ArrowDown'){ e.preventDefault(); active = Math.min(active+1, items.length-1); paint(); }
+    else if (e.key === 'ArrowUp'){ e.preventDefault(); active = Math.max(active-1, 0); paint(); }
+    else if (e.key === 'Enter' && active >= 0){ e.preventDefault(); choose(items[active]); }
+    else if (e.key === 'Escape'){ close(); }
+  });
+  input.addEventListener('blur', () => setTimeout(close, 130));
+}
+document.querySelectorAll('.ac-input').forEach(setupAutocomplete);
+
+/* ===== form ===== */
 const form = document.getElementById('quoteForm');
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  const name = form.name.value.trim(), email = form.email.value.trim(), phone = form.phone.value.trim();
-  if (!name || !email || !phone){ form.reportValidity(); return; }
+  ['name','email','phone','delivery'].forEach(n => {
+    const el = form.elements[n];
+    el.setCustomValidity(el.value.trim() ? '' : 'This field is required');
+  });
+  if (!form.reportValidity()) return;
   form.style.display = 'none';
   document.getElementById('formSuccess').classList.add('show');
 });

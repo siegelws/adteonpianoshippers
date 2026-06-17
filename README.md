@@ -1,6 +1,6 @@
 # Adteon Piano Shippers
 
-A premium, conversion-focused one-page website for **Adteon Piano Shippers** — specialist piano moving, transportation, storage and international shipping across the **United States, United Kingdom & Canada**.
+A premium, conversion-focused one-page website for **Adteon Piano Shippers** — specialist piano moving, transportation, storage and international shipping across the **United States, United Kingdom, Canada & Australia**.
 
 ## Overview
 
@@ -13,7 +13,7 @@ A premium, conversion-focused one-page website for **Adteon Piano Shippers** —
 
 ## Sections
 
-Hero · Why Pianos Require Specialized Movers · Services · Process · What's Included · Coverage (US/CA/UK) · Why Choose Us · Stats · Testimonials · FAQ · Emergency Moving · Final CTA · Contact · Footer.
+Hero · Why Pianos Require Specialized Movers · Services · Process · What's Included · Coverage (US/CA/UK/AU) · Why Choose Us · Stats · Testimonials · FAQ · Emergency Moving · Final CTA · Contact · Footer.
 
 ## Running locally
 
