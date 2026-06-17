@@ -1,0 +1,10 @@
+# Local Claude Code preview / tooling config
+.claude/
+
+# OS / editor cruft
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Temp frame extraction
+_frames/
