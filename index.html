@@ -5,25 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!-- ============ SEO ============ -->
-<title>Piano Movers USA, UK &amp; Canada | Grand &amp; Upright Piano Moving Services — Global Piano Movers</title>
-<meta name="description" content="Global Piano Movers — certified, fully insured piano moving services across the US, UK &amp; Canada. White-glove upright, baby grand &amp; grand piano transportation, relocation, storage &amp; international piano shipping. Get a free quote today." />
+<title>Piano Movers USA, UK &amp; Canada | Grand &amp; Upright Piano Moving Services — Adteon Piano Shippers</title>
+<meta name="description" content="Adteon Piano Shippers — certified, fully insured piano moving services across the US, UK &amp; Canada. White-glove upright, baby grand &amp; grand piano transportation, relocation, storage &amp; international piano shipping. Get a free quote today." />
 <meta name="keywords" content="piano movers, piano moving services, grand piano movers, upright piano moving, piano transportation, piano relocation services, piano movers near me, piano shipping company, piano moving company, international piano movers, piano movers USA, piano movers Canada, piano movers UK" />
 <meta name="theme-color" content="#0b1a3a" />
 <meta name="robots" content="index, follow" />
-<link rel="canonical" href="https://www.globalpianomovers.com/" />
+<link rel="canonical" href="https://www.adteonpianoshippers.com/" />
 
 <!-- ============ Open Graph ============ -->
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="Global Piano Movers" />
+<meta property="og:site_name" content="Adteon Piano Shippers" />
 <meta property="og:title" content="Professional Piano Moving Services Across the US, UK &amp; Canada" />
 <meta property="og:description" content="Certified, fully insured white-glove piano movers. Upright, baby grand &amp; grand piano transport, storage &amp; international shipping. 2,800+ successful moves." />
 <meta property="og:image" content="d8c6cc53c27a184e9b63ae9ba6797613.jpg" />
-<meta property="og:url" content="https://www.globalpianomovers.com/" />
+<meta property="og:url" content="https://www.adteonpianoshippers.com/" />
 <meta property="og:locale" content="en_US" />
 
 <!-- ============ Twitter ============ -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Global Piano Movers — White-Glove Piano Moving, US · UK · Canada" />
+<meta name="twitter:title" content="Adteon Piano Shippers — White-Glove Piano Moving, US · UK · Canada" />
 <meta name="twitter:description" content="Certified, fully insured piano movers. Free quotes for upright, baby grand, grand &amp; international piano moves." />
 <meta name="twitter:image" content="d8c6cc53c27a184e9b63ae9ba6797613.jpg" />
 
@@ -35,10 +35,10 @@
 {
   "@context": "https://schema.org",
   "@type": "MovingCompany",
-  "name": "Global Piano Movers",
+  "name": "Adteon Piano Shippers",
   "description": "Specialist piano moving, transportation, storage and international shipping across the United States, United Kingdom and Canada.",
   "image": "d8c6cc53c27a184e9b63ae9ba6797613.jpg",
-  "url": "https://www.globalpianomovers.com/",
+  "url": "https://www.adteonpianoshippers.com/",
   "telephone": "+1-888-726-6466",
   "priceRange": "$$$",
   "areaServed": ["United States", "United Kingdom", "Canada"],
@@ -68,7 +68,7 @@
   "@context": "https://schema.org",
   "@type": "Service",
   "serviceType": "Piano Moving Services",
-  "provider": { "@type": "MovingCompany", "name": "Global Piano Movers" },
+  "provider": { "@type": "MovingCompany", "name": "Adteon Piano Shippers" },
   "areaServed": ["US","UK","Canada"],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
@@ -355,13 +355,18 @@ section{position:relative}
 
 /* ---------- WHY CHOOSE ---------- */
 .choose-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.choose{background:var(--panel);border:1px solid var(--line-2);border-radius:20px;padding:30px;transition:.45s;position:relative;overflow:hidden}
+.choose{background:var(--panel);border:1px solid var(--line-2);border-radius:20px;overflow:hidden;transition:.45s cubic-bezier(.2,.7,.2,1);position:relative;transform-style:preserve-3d}
 .choose:hover{transform:translateY(-7px);box-shadow:0 30px 50px -30px rgba(8,14,30,.5);border-color:rgba(201,162,75,.35)}
-.choose .ic{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,var(--gold-bright),var(--gold));display:grid;place-items:center;margin-bottom:20px}
-.choose .ic svg{width:24px;height:24px;stroke:var(--navy-deep)}
+.choose .media{position:relative;height:174px;overflow:hidden;background:#16213d}
+.choose .media img,.choose .media video{width:100%;height:100%;object-fit:cover;transition:transform .7s ease;display:block}
+.choose .media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,14,30,.04),rgba(8,14,30,.16) 55%,rgba(8,14,30,.48))}
+.choose:hover .media img,.choose:hover .media video{transform:scale(1.06)}
+.choose .ic{position:absolute;left:24px;top:140px;z-index:3;width:56px;height:56px;border-radius:15px;background:linear-gradient(135deg,var(--gold-bright),var(--gold));display:grid;place-items:center;box-shadow:0 14px 26px -10px rgba(201,162,75,.65)}
+.choose .ic svg{width:27px;height:27px;stroke:var(--navy-deep)}
+.choose .body{position:relative;padding:36px 26px 28px}
 .choose h3{font-family:var(--grotesk);font-weight:600;font-size:19px;margin-bottom:9px;letter-spacing:-.01em}
 .choose p{font-size:14px;color:var(--muted)}
-.choose .big{position:absolute;right:18px;top:14px;font-family:var(--serif);font-style:italic;font-size:42px;color:var(--line-2)}
+.choose .big{position:absolute;right:22px;top:22px;font-family:var(--serif);font-style:italic;font-size:40px;color:rgba(10,12,20,.09)}
 
 /* ---------- STATS ---------- */
 .stats{background:linear-gradient(135deg,var(--navy),var(--navy-deep));color:#fff;border-radius:0}
@@ -533,7 +538,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
       <span class="brand-mark">
         <svg viewBox="0 0 24 24" fill="none"><g stroke="#e6c878" stroke-width="1.5"><path d="M4 6h16v9a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"/><path d="M8 6v6M12 6v6M16 6v6" stroke-linecap="round"/></g></svg>
       </span>
-      <span class="brand-name">GLOBAL PIANO<small>MOVERS · US · UK · CA</small></span>
+      <span class="brand-name">ADTEON PIANO<small>SHIPPERS · US · UK · CA</small></span>
     </a>
     <nav class="nav-links">
       <a href="#services">services <span class="arr">↗</span></a>
@@ -570,7 +575,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
   <div class="wrap">
     <div class="hero-panel" id="heroPanel">
       <div class="hero-top">
-        <div class="hero-wordmark">(GLOBAL_PIANO)<small>V.01 — WHITE GLOVE LOGISTICS</small></div>
+        <div class="hero-wordmark">(ADTEON_PIANO)<small>V.01 — WHITE GLOVE LOGISTICS</small></div>
         <div class="hero-topnav">
           <a href="#services">services <span class="arr">↗</span></a>
           <a href="#coverage">coverage <span class="arr">↗</span></a>
@@ -837,12 +842,36 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
       <p class="sec-sub">Specialists, not generalists. This is the only thing we do — and we do it better than anyone.</p>
     </div>
     <div class="choose-grid">
-      <div class="choose reveal"><span class="big">01</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 6h16v9a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"/><path d="M8 6v6M12 6v6M16 6v6"/></svg></div><h3>Piano Specialists</h3><p>We focus exclusively on piano transportation — no couches, no clutter, just pianos.</p></div>
-      <div class="choose reveal d1"><span class="big">02</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 2l9 4v6c0 5-3.8 8.5-9 10-5.2-1.5-9-5-9-10V6z"/></svg></div><h3>Fully Insured</h3><p>Complete peace of mind during transit, with valuation options for high-value instruments.</p></div>
-      <div class="choose reveal d2"><span class="big">03</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>Experienced Crews</h3><p>Thousands of successful moves completed by trained, vetted, uniformed professionals.</p></div>
-      <div class="choose reveal"><span class="big">04</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M6 3h12l-1 9H7zM6 21h12M9 21v-3M15 21v-3"/></svg></div><h3>White-Glove Service</h3><p>Premium handling from pickup to placement — your piano treated as the treasure it is.</p></div>
-      <div class="choose reveal d1"><span class="big">05</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><h3>Transparent Pricing</h3><p>No hidden charges, no surprise fees — clear quotes you can trust before we begin.</p></div>
-      <div class="choose reveal d2"><span class="big">06</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg></div><h3>International Expertise</h3><p>Cross-border logistics specialists handling customs, crating and ocean transport.</p></div>
+      <div class="choose reveal">
+        <div class="media"><img src="349c4c98ccce2483be897b07a55a819d.jpg" alt="A grand piano being specially handled for transport"></div>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 6h16v9a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"/><path d="M8 6v6M12 6v6M16 6v6"/></svg></div>
+        <div class="body"><span class="big">01</span><h3>Piano Specialists</h3><p>We focus exclusively on piano transportation — no couches, no clutter, just pianos.</p></div>
+      </div>
+      <div class="choose reveal d1">
+        <div class="media"><img src="890efe63d5d4972796da0d7cabb344dd.jpg" alt="Pianos padded and securely strapped inside a moving truck"></div>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 2l9 4v6c0 5-3.8 8.5-9 10-5.2-1.5-9-5-9-10V6z"/></svg></div>
+        <div class="body"><span class="big">02</span><h3>Fully Insured</h3><p>Complete peace of mind during transit, with valuation options for high-value instruments.</p></div>
+      </div>
+      <div class="choose reveal d2">
+        <div class="media"><img src="b99a34ad26b8f79c45005de5c2f6780a.jpg" alt="Experienced movers carefully maneuvering a piano inside a home"></div>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="body"><span class="big">03</span><h3>Experienced Crews</h3><p>Thousands of successful moves completed by trained, vetted, uniformed professionals.</p></div>
+      </div>
+      <div class="choose reveal">
+        <div class="media"><img src="d8c6cc53c27a184e9b63ae9ba6797613.jpg" alt="White-glove movers placing a grand piano in an elegant room"></div>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M6 3h12l-1 9H7zM6 21h12M9 21v-3M15 21v-3"/></svg></div>
+        <div class="body"><span class="big">04</span><h3>White-Glove Service</h3><p>Premium handling from pickup to placement — your piano treated as the treasure it is.</p></div>
+      </div>
+      <div class="choose reveal d1">
+        <div class="media"><video src="pricing.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Calculating a transparent piano moving quote"></video></div>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div class="body"><span class="big">05</span><h3>Transparent Pricing</h3><p>No hidden charges, no surprise fees — clear quotes you can trust before we begin.</p></div>
+      </div>
+      <div class="choose reveal d2">
+        <div class="media"><img src="7eb86971a955ab63ee75acb2b6454638.jpg" alt="A piano move outside a historic UK church, reflecting international expertise"></div>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg></div>
+        <div class="body"><span class="big">06</span><h3>International Expertise</h3><p>Cross-border logistics specialists handling customs, crating and ocean transport.</p></div>
+      </div>
     </div>
   </div>
 </section>
@@ -971,7 +1000,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
         </div>
         <div class="cinfo-item">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg></div>
-          <div><div class="lab">Email</div><div class="val">quotes@globalpianomovers.com</div></div>
+          <div><div class="lab">Email</div><div class="val">quotes@adteonpianoshippers.com</div></div>
         </div>
         <div class="cinfo-item">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg></div>
@@ -1026,7 +1055,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
       <div class="foot-brand">
         <div class="brand">
           <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><g stroke="#e6c878" stroke-width="1.5"><path d="M4 6h16v9a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"/><path d="M8 6v6M12 6v6M16 6v6" stroke-linecap="round"/></g></svg></span>
-          <span class="brand-name" style="color:#fff">GLOBAL PIANO MOVERS</span>
+          <span class="brand-name" style="color:#fff">ADTEON PIANO SHIPPERS</span>
         </div>
         <p>White-glove piano moving, storage and international shipping across the United States, United Kingdom and Canada. Your instrument, handled with the care it deserves.</p>
         <div class="foot-badges">
@@ -1058,7 +1087,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
       </div>
     </div>
     <div class="foot-bottom">
-      <p>© <span id="year"></span> Global Piano Movers. All rights reserved.</p>
+      <p>© <span id="year"></span> Adteon Piano Shippers. All rights reserved.</p>
       <p class="made">⟡ White-Glove Piano Logistics · US · UK · CA</p>
     </div>
   </div>

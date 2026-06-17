@@ -1,6 +1,6 @@
-# Global Piano Movers
+# Adteon Piano Shippers
 
-A premium, conversion-focused one-page website for **Global Piano Movers** — specialist piano moving, transportation, storage and international shipping across the **United States, United Kingdom & Canada**.
+A premium, conversion-focused one-page website for **Adteon Piano Shippers** — specialist piano moving, transportation, storage and international shipping across the **United States, United Kingdom & Canada**.
 
 ## Overview
 
@@ -26,9 +26,9 @@ python -m http.server 5500
 
 ## Before going live
 
-- Replace the placeholder phone number `+1 (888) 726-6466` and email `quotes@globalpianomovers.com` with real contact details (they appear in the nav, CTAs, schema and footer).
+- Replace the placeholder phone number `+1 (888) 726-6466` and email `quotes@adteonpianoshippers.com` with real contact details (they appear in the nav, CTAs, schema and footer).
 - Wire the quote form to a backend or form service (currently shows a front-end success state only).
 
 ---
 
-© Global Piano Movers — White-glove piano logistics · US · UK · CA
+© Adteon Piano Shippers — White-glove piano logistics · US · UK · CA
