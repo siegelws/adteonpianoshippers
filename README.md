@@ -1,6 +1,6 @@
-# Adteon Piano Shippers
+# Move Free Logistics
 
-A premium, conversion-focused one-page website for **Adteon Piano Shippers** — specialist piano moving, transportation, storage and international shipping across the **United States, United Kingdom, Canada & Australia**.
+A premium, conversion-focused one-page website for **Move Free Logistics** — specialist piano moving, transportation, storage and international shipping across the **United States, United Kingdom, Canada & Australia**.
 
 ## Overview
 
@@ -26,9 +26,9 @@ python -m http.server 5500
 
 ## Before going live
 
-- Replace the placeholder phone number `+1 (888) 726-6466` and email `quotes@adteonpianoshippers.com` with real contact details (they appear in the nav, CTAs, schema and footer).
+- The contact number is `+1 (479) 345-1148` — **WhatsApp text only** (all "call" CTAs link to `wa.me`). Replace the placeholder email `quotes@movefreelogistics.com` with a real address (number and email appear in the nav, CTAs, schema and footer).
 - Wire the quote form to a backend or form service (currently shows a front-end success state only).
 
 ---
 
-© Adteon Piano Shippers — White-glove piano logistics · US · UK · CA
+© Move Free Logistics — White-glove piano logistics · US · UK · CA
