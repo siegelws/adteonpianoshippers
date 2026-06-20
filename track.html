@@ -133,6 +133,9 @@ main{flex:1 0 auto}
 .badge{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:9px 16px;border-radius:30px;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
 .badge .dot{width:8px;height:8px;border-radius:50%;background:currentColor}
 .badge.s-booked{background:rgba(11,26,58,.1);color:var(--navy)}
+.badge.s-preparingforshipping{background:rgba(11,26,58,.1);color:#34507f}
+.badge.s-shipped{background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:var(--navy-deep)}
+.badge.s-atcustoms{background:rgba(201,162,75,.16);color:#8a6a1f}
 .badge.s-intransit{background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:var(--navy-deep)}
 .badge.s-outfordelivery{background:rgba(201,162,75,.16);color:#8a6a1f}
 .badge.s-outfordelivery .dot{animation:pulse 1.6s infinite}
@@ -284,7 +287,7 @@ footer{flex-shrink:0;background:var(--ink);color:rgba(255,255,255,.7);padding:60
           </div>
           <button type="submit" class="btn btn-gold">Track Shipment <span class="arr">↗</span></button>
         </form>
-        <p class="track-hint">Don't have your number? Message us on WhatsApp. &nbsp;·&nbsp; Try a sample: <b data-demo="MFL-2026-0482">MFL-2026-0482</b>, <b data-demo="MFL-2026-0517">MFL-2026-0517</b>, <b data-demo="MFL-2026-0463">MFL-2026-0463</b></p>
+        <p class="track-hint">Don't have your number? <a href="https://wa.me/14793451148?text=Hi%20Move%20Free%20Logistics%2C%20I%20need%20my%20tracking%20number" target="_blank" rel="noopener" style="color:#9a7b2e">Message us on WhatsApp</a>.<span id="demoHint"> &nbsp;·&nbsp; Try a sample: <b data-demo="MFL-2026-0482">MFL-2026-0482</b>, <b data-demo="MFL-2026-0517">MFL-2026-0517</b>, <b data-demo="MFL-2026-0463">MFL-2026-0463</b></span></p>
 
         <div class="tr-state">
           <div class="tr-loading" id="trLoading"><div class="spinner"></div><p class="lbl">Locating your shipment…</p></div>
@@ -361,6 +364,8 @@ footer{flex-shrink:0;background:var(--ink);color:rgba(255,255,255,.7);padding:60
   </a>
 </div>
 
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 const nav = document.getElementById('nav');
@@ -378,7 +383,9 @@ const elResult = document.getElementById('trResult');
 const elHowHead = document.getElementById('howHead');
 
 let DATA = null;
-const STATUS_PROGRESS = { booked:12, scheduled:12, intransit:55, outfordelivery:88, delivered:100, delayed:45 };
+const SUPA_OK = window.SUPA_URL && window.SUPA_URL.startsWith('http') && window.SUPA_ANON && window.SUPA_ANON.length > 20;
+const sb = SUPA_OK ? window.supabase.createClient(window.SUPA_URL, window.SUPA_ANON) : null;
+const STATUS_PROGRESS = { booked:8, scheduled:8, preparingforshipping:20, shipped:50, intransit:60, atcustoms:78, outfordelivery:92, delivered:100, delayed:45 };
 const slug = s => (s||'').toLowerCase().replace(/[^a-z]/g,'');
 const esc = s => (s==null?'':String(s)).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function fmtDate(d){ const t=new Date(d.replace(' ','T')); if(isNaN(t)) return esc(d);
@@ -386,12 +393,18 @@ function fmtDate(d){ const t=new Date(d.replace(' ','T')); if(isNaN(t)) return e
 function fmtDay(d){ const t=new Date(d); if(isNaN(t)) return esc(d);
   return t.toLocaleDateString('en-GB',{weekday:'short',day:'2-digit',month:'short',year:'numeric'}); }
 
-async function loadData(){
-  if (DATA) return DATA;
-  const res = await fetch('tracking.json', {cache:'no-store'});
-  if (!res.ok) throw new Error('data');
-  DATA = await res.json();
-  return DATA;
+async function getShipment(id){
+  if (sb){ // live database
+    const { data, error } = await sb.rpc('track_shipment', { p_code: id });
+    if (error) throw error;
+    if (!data || !data.length) return null;
+    const r = data[0];
+    return { status:r.status, service:r.service, pianoType:r.piano_type, origin:r.origin, destination:r.destination,
+      estimatedDelivery:r.estimated_delivery, currentLocation:r.current_location, events:r.events||[] };
+  }
+  // fallback: static sample data
+  if (!DATA){ const res = await fetch('tracking.json', {cache:'no-store'}); if(!res.ok) throw new Error('data'); DATA = await res.json(); }
+  return DATA[id] || null;
 }
 
 function show(el){ [elLoading,elError,elResult].forEach(e=>e.classList.remove('show')); if(el) el.classList.add('show'); }
@@ -401,11 +414,13 @@ async function track(rawId){
   if (!id){ input.focus(); return; }
   history.replaceState(null,'', '?id='+encodeURIComponent(id));
   show(elLoading); elHowHead.style.display='none';
-  let data;
-  try { data = await loadData(); }
+  let rec;
+  try {
+    const p = getShipment(id);
+    await new Promise(r=>setTimeout(r,500)); // brief, believable lookup
+    rec = await p;
+  }
   catch(e){ elErrNum.textContent='a temporary issue reaching our system'; show(elError); return; }
-  await new Promise(r=>setTimeout(r,550)); // brief, believable lookup
-  const rec = data[id];
   if (!rec){ elErrNum.textContent='“'+id+'”'; show(elError); return; }
   renderResult(id, rec);
 }
@@ -473,6 +488,9 @@ function renderResult(id, r){
 form.addEventListener('submit', e => { e.preventDefault(); track(input.value); });
 document.querySelectorAll('.track-hint b[data-demo]').forEach(b =>
   b.addEventListener('click', () => { input.value = b.dataset.demo; track(b.dataset.demo); }));
+
+// hide sample numbers once the live database is connected
+if (SUPA_OK){ const dh = document.getElementById('demoHint'); if (dh) dh.style.display = 'none'; }
 
 // deep link ?id=
 const qid = new URLSearchParams(location.search).get('id');

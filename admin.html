@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Operator Dashboard — Move Free Logistics</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b1a3a'/%3E%3Cg fill='%23e6c878'%3E%3Crect x='8' y='9' width='2.4' height='14'/%3E%3Crect x='13' y='9' width='2.4' height='14'/%3E%3Crect x='18' y='9' width='2.4' height='14'/%3E%3Crect x='23' y='9' width='1.6' height='14'/%3E%3C/g%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@1&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --navy:#0b1a3a;--navy-deep:#060f24;--ink:#0a0a0c;
+  --gold:#c9a24b;--gold-bright:#e6c878;
+  --paper:#eceae4;--paper-2:#f6f4ef;--panel:#ffffff;
+  --text:#10131c;--muted:#5b6070;--line:rgba(10,12,20,.12);--line-2:rgba(10,12,20,.07);
+  --green:#1f9d55;--red:#c0392b;
+  --shadow:0 40px 90px -30px rgba(8,14,30,.45);
+  --mono:'Space Mono',ui-monospace,monospace;--grotesk:'Space Grotesk',sans-serif;
+  --serif:'Instrument Serif',Georgia,serif;--body:'Inter',-apple-system,system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--body);color:var(--text);line-height:1.55;min-height:100vh;
+  background:radial-gradient(120% 60% at 50% 120%, rgba(230,200,120,.4) 0%, rgba(230,200,120,0) 55%),linear-gradient(180deg,#d8d5cf,#cdcac3 45%,#d7d4cd);
+  background-attachment:fixed}
+a{color:inherit;text-decoration:none}
+.mono{font-family:var(--mono)}
+.lbl{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  padding:13px 22px;border-radius:40px;border:1px solid transparent;cursor:pointer;transition:.3s;white-space:nowrap}
+.btn-gold{background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:var(--navy-deep);font-weight:700;box-shadow:0 12px 28px -12px rgba(201,162,75,.8)}
+.btn-gold:hover{transform:translateY(-2px)}
+.btn-ghost{background:transparent;border-color:var(--line);color:var(--text)}
+.btn-ghost:hover{border-color:var(--navy);background:rgba(11,26,58,.04)}
+.btn-navy{background:var(--navy);color:#fff}.btn-navy:hover{background:var(--navy-deep)}
+.btn-sm{padding:9px 15px;font-size:11px}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.brand{display:flex;align-items:center;gap:11px}
+.brand-mark{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:var(--navy);flex:none}
+.brand-mark svg{width:20px;height:20px}
+.brand-name{font-family:var(--mono);font-weight:700;font-size:14px;line-height:1.05}
+.brand-name small{display:block;font-size:8.5px;letter-spacing:.3em;color:#9a7b2e;font-weight:400}
+
+/* fields */
+.field{margin-bottom:13px}
+.field label{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:11px;font-family:var(--body);font-size:14px;background:var(--paper-2);color:var(--text);transition:.25s}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold);background:#fff;box-shadow:0 0 0 4px rgba(201,162,75,.13)}
+.field textarea{resize:vertical;min-height:62px}
+
+/* status badge */
+.badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:7px 13px;border-radius:30px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.s-booked{background:rgba(11,26,58,.1);color:var(--navy)}
+.s-preparingforshipping{background:rgba(11,26,58,.1);color:#34507f}
+.s-shipped{background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:var(--navy-deep)}
+.s-intransit{background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:var(--navy-deep)}
+.s-atcustoms{background:rgba(201,162,75,.16);color:#8a6a1f}
+.s-outfordelivery{background:rgba(201,162,75,.16);color:#8a6a1f}
+.s-delivered{background:rgba(31,157,85,.14);color:#157a40}
+.s-delayed{background:rgba(200,60,60,.12);color:#b23b3b}
+
+/* ===== LOGIN ===== */
+.auth-wrap{min-height:100vh;display:grid;place-items:center;padding:24px}
+.auth-card{width:100%;max-width:410px;background:var(--panel);border:1px solid rgba(255,255,255,.7);border-radius:24px;box-shadow:var(--shadow);padding:38px 34px}
+.auth-card .brand{justify-content:center;margin-bottom:6px}
+.auth-card h1{font-family:var(--grotesk);font-weight:600;font-size:23px;text-align:center;margin:18px 0 4px;letter-spacing:-.01em}
+.auth-card .sub{text-align:center;color:var(--muted);font-size:13.5px;margin-bottom:26px}
+.auth-card .btn-gold{width:100%;padding:15px}
+.auth-msg{font-size:13px;text-align:center;margin-top:14px;min-height:18px}
+.auth-msg.err{color:var(--red)}
+.auth-foot{text-align:center;margin-top:20px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.auth-foot a{color:#9a7b2e}
+
+/* ===== DASHBOARD ===== */
+.dash{display:none}
+.dash.show{display:block}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(11,26,58,.9);backdrop-filter:blur(14px);color:#fff;border-bottom:1px solid rgba(255,255,255,.1)}
+.topbar .in{max-width:1180px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.topbar .brand-name{color:#fff}
+.topbar .who{font-family:var(--mono);font-size:11.5px;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:14px}
+.topbar .who b{color:var(--gold-bright);font-weight:700}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 24px 70px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}
+.stat{background:var(--panel);border:1px solid var(--line-2);border-radius:16px;padding:18px 20px}
+.stat .n{font-family:var(--grotesk);font-weight:700;font-size:30px;line-height:1;letter-spacing:-.02em}
+.stat .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.stat .n.gold{color:#a9842f}.stat .n.green{color:var(--green)}
+
+.grid{display:grid;grid-template-columns:380px 1fr;gap:22px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line-2);border-radius:20px;box-shadow:0 30px 60px -40px rgba(8,14,30,.5)}
+.card-h{padding:20px 24px;border-bottom:1px solid var(--line-2);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.card-h h2{font-family:var(--grotesk);font-weight:600;font-size:17px;letter-spacing:-.01em}
+.card-b{padding:22px 24px}
+.new-form .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.new-form .btn-gold{width:100%;margin-top:6px;padding:14px}
+
+.created{display:none;margin:14px 0 2px;padding:16px;border-radius:14px;background:linear-gradient(135deg,rgba(230,200,120,.18),rgba(230,200,120,.06));border:1px solid rgba(201,162,75,.4)}
+.created.show{display:block;animation:pop .4s ease}
+@keyframes pop{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
+.created .k{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8a6a1f}
+.created .code{font-family:var(--mono);font-weight:700;font-size:22px;letter-spacing:.04em;margin:4px 0 10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.created .actions{display:flex;gap:8px;flex-wrap:wrap}
+
+.list-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.search{position:relative;flex:1;min-width:180px}
+.search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted)}
+.search input{width:100%;padding:10px 12px 10px 36px;border:1px solid var(--line);border-radius:30px;font-family:var(--mono);font-size:12.5px;background:var(--paper-2)}
+.search input:focus{outline:none;border-color:var(--gold);background:#fff}
+
+.ship{border:1px solid var(--line-2);border-radius:16px;padding:18px 20px;margin-bottom:14px;transition:.25s;background:#fff}
+.ship:hover{border-color:rgba(201,162,75,.4);box-shadow:0 18px 40px -30px rgba(8,14,30,.5)}
+.ship-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+.ship-code{font-family:var(--mono);font-weight:700;font-size:15px;letter-spacing:.03em;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.ship-code:hover{color:var(--gold)}
+.ship-code svg{width:13px;height:13px;stroke:currentColor;opacity:.5}
+.ship-client{font-size:13px;color:var(--muted);margin-top:3px}
+.ship-route{display:flex;align-items:center;gap:8px;font-size:13.5px;margin:12px 0;flex-wrap:wrap}
+.ship-route .arrow{color:var(--gold)}
+.ship-route .pt{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--line);padding:2px 9px;border-radius:20px;margin-left:4px}
+.ship-update{display:grid;grid-template-columns:1.1fr 1.2fr 1fr auto;gap:8px;align-items:end;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
+.ship-update .field{margin:0}
+.ship-update label{font-size:9.5px}
+.ship-update input,.ship-update select{padding:9px 11px;font-size:12.5px}
+.ship-meta{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:10px;display:flex;gap:16px;flex-wrap:wrap}
+.ship-actions{display:flex;gap:8px;margin-top:4px}
+.link-btn{background:none;border:none;font-family:var(--mono);font-size:11px;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px;transition:.2s}
+.link-btn:hover{color:var(--gold)}
+.link-btn.del:hover{color:var(--red)}
+.empty{text-align:center;padding:50px 20px;color:var(--muted)}
+.empty svg{width:42px;height:42px;stroke:var(--line);margin-bottom:14px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;font-family:var(--mono);font-size:12.5px;padding:13px 22px;border-radius:40px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.35s;z-index:50}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.err{background:var(--red)}
+.notice{max-width:760px;margin:60px auto;background:#fff;border:1px solid rgba(201,162,75,.4);border-radius:18px;padding:30px;box-shadow:var(--shadow)}
+.notice h2{font-family:var(--grotesk);font-size:20px;margin-bottom:10px}
+.notice p{color:var(--muted);font-size:14px;margin-bottom:10px}
+.notice code{font-family:var(--mono);font-size:12.5px;background:var(--paper-2);padding:2px 7px;border-radius:6px}
+.spinner{width:30px;height:30px;border:3px solid var(--line);border-top-color:var(--gold);border-radius:50%;margin:30px auto;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:880px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.ship-update{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.new-form .row2{grid-template-columns:1fr}.ship-update{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div class="auth-wrap" id="authWrap">
+  <div class="auth-card">
+    <div class="brand">
+      <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><g stroke="#e6c878" stroke-width="1.5"><path d="M4 6h16v9a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"/><path d="M8 6v6M12 6v6M16 6v6" stroke-linecap="round"/></g></svg></span>
+      <span class="brand-name">MOVE FREE<small>LOGISTICS · OPERATOR</small></span>
+    </div>
+    <h1>Operator Sign In</h1>
+    <p class="sub">Log in to register clients and update shipment status.</p>
+    <form id="loginForm">
+      <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="username" required></div>
+      <div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required></div>
+      <button type="submit" class="btn btn-gold" id="loginBtn">Sign In</button>
+      <p class="auth-msg" id="authMsg"></p>
+    </form>
+    <p class="auth-foot"><a href="index.html">← Back to website</a></p>
+  </div>
+</div>
+
+<!-- ===== NOT CONFIGURED NOTICE ===== -->
+<div class="notice" id="notice" style="display:none">
+  <h2>⚙️ Backend not configured yet</h2>
+  <p>This dashboard needs a free Supabase project. Open <code>SUPABASE_SETUP.md</code> in your repo and follow the steps, then put your <b>Project URL</b> and <b>anon key</b> into <code>config.js</code>.</p>
+  <p>Once <code>config.js</code> has real values, this page becomes a full login + dashboard.</p>
+  <p style="margin-top:16px"><a href="index.html" class="btn btn-ghost btn-sm">← Back to website</a></p>
+</div>
+
+<!-- ===== DASHBOARD ===== -->
+<div class="dash" id="dash">
+  <div class="topbar">
+    <div class="in">
+      <div class="brand"><span class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><g stroke="#e6c878" stroke-width="1.5"><path d="M4 6h16v9a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"/><path d="M8 6v6M12 6v6M16 6v6" stroke-linecap="round"/></g></svg></span><span class="brand-name" style="color:#fff">MOVE FREE<small>OPERATOR CONSOLE</small></span></div>
+      <div class="who"><span>Signed in as <b id="whoEmail"></b></span><a href="track.html" target="_blank" class="btn btn-ghost btn-sm" style="color:#fff;border-color:rgba(255,255,255,.3)">View tracker ↗</a><button class="btn btn-ghost btn-sm" id="signOut" style="color:#fff;border-color:rgba(255,255,255,.3)">Sign out</button></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><div class="n" id="stTotal">0</div><div class="k">Total Shipments</div></div>
+      <div class="stat"><div class="n gold" id="stActive">0</div><div class="k">In Progress</div></div>
+      <div class="stat"><div class="n green" id="stDelivered">0</div><div class="k">Delivered</div></div>
+      <div class="stat"><div class="n" id="stMonth">0</div><div class="k">Added This Month</div></div>
+    </div>
+
+    <div class="grid">
+      <!-- New shipment -->
+      <div class="card">
+        <div class="card-h"><h2>Register a Client</h2><span class="lbl">New</span></div>
+        <div class="card-b">
+          <form class="new-form" id="newForm">
+            <div class="field"><label>Client Name *</label><input name="client_name" required placeholder="Full name"></div>
+            <div class="row2">
+              <div class="field"><label>Phone</label><input name="client_phone" placeholder="+1 …"></div>
+              <div class="field"><label>Piano Type</label>
+                <select name="piano_type"><option>Upright</option><option>Studio Upright</option><option>Baby Grand</option><option>Grand</option><option>Concert Grand</option><option>Digital Piano</option></select>
+              </div>
+            </div>
+            <div class="field"><label>Client Address</label><input name="client_address" placeholder="Street, city, country"></div>
+            <div class="row2">
+              <div class="field"><label>Origin *</label><input name="origin" required placeholder="City, Country"></div>
+              <div class="field"><label>Destination *</label><input name="destination" required placeholder="City, Country"></div>
+            </div>
+            <div class="row2">
+              <div class="field"><label>Service</label>
+                <select name="service"><option>Local Piano Moving</option><option>Long Distance Piano Moving</option><option>International Piano Shipping</option><option>Grand Piano Moving</option><option>Commercial Relocation</option></select>
+              </div>
+              <div class="field"><label>Est. Delivery</label><input name="estimated_delivery" type="date"></div>
+            </div>
+            <button type="submit" class="btn btn-gold" id="createBtn">Generate Tracking Code</button>
+          </form>
+          <div class="created" id="created">
+            <div class="k">✓ Shipment created — tracking code</div>
+            <div class="code"><span id="newCode"></span></div>
+            <div class="actions">
+              <button class="btn btn-navy btn-sm" id="copyCode">Copy code</button>
+              <button class="btn btn-ghost btn-sm" id="copyLink">Copy track link</button>
+              <a class="btn btn-ghost btn-sm" id="waShare" target="_blank" rel="noopener">Send via WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shipments list -->
+      <div class="card">
+        <div class="card-h">
+          <h2>Shipments</h2>
+          <div class="list-tools">
+            <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="search" placeholder="Search code or client…"></div>
+            <button class="btn btn-ghost btn-sm" id="refresh">↻</button>
+          </div>
+        </div>
+        <div class="card-b" id="listBody">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const STAGES = ['Booked','Preparing for Shipping','Shipped','At Customs','Out for Delivery','Delivered','Delayed'];
+const slug = s => (s||'').toLowerCase().replace(/[^a-z]/g,'');
+const esc = s => (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const configured = window.SUPA_URL && window.SUPA_URL.startsWith('http') && window.SUPA_ANON && window.SUPA_ANON.length > 20;
+
+const $ = id => document.getElementById(id);
+const authWrap=$('authWrap'), dash=$('dash'), notice=$('notice');
+let sb=null, SHIPMENTS=[], EMAIL='';
+
+function toast(msg, err){ const t=$('toast'); t.textContent=msg; t.className='toast show'+(err?' err':''); setTimeout(()=>t.className='toast',2600); }
+function copy(text, label){ navigator.clipboard?.writeText(text).then(()=>toast((label||'Copied')+' ✓')).catch(()=>toast('Copy failed',1)); }
+
+if (!configured){
+  authWrap.style.display='none';
+  notice.style.display='block';
+} else {
+  sb = window.supabase.createClient(window.SUPA_URL, window.SUPA_ANON);
+  init();
+}
+
+async function init(){
+  const { data:{ session } } = await sb.auth.getSession();
+  session ? showDash(session.user) : showLogin();
+  sb.auth.onAuthStateChange((_e, s)=>{ if(!s) showLogin(); });
+}
+function showLogin(){ authWrap.style.display='grid'; dash.classList.remove('show'); }
+function showDash(user){ EMAIL=user.email; $('whoEmail').textContent=user.email; authWrap.style.display='none'; dash.classList.add('show'); loadShipments(); }
+
+/* ---- auth ---- */
+$('loginForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const msg=$('authMsg'), btn=$('loginBtn');
+  msg.textContent=''; msg.className='auth-msg'; btn.disabled=true; btn.textContent='Signing in…';
+  const { data, error } = await sb.auth.signInWithPassword({ email:$('email').value.trim(), password:$('password').value });
+  btn.disabled=false; btn.textContent='Sign In';
+  if (error){ msg.textContent=error.message; msg.className='auth-msg err'; return; }
+  showDash(data.user);
+});
+$('signOut').addEventListener('click', async ()=>{ await sb.auth.signOut(); showLogin(); });
+
+/* ---- data ---- */
+async function loadShipments(){
+  $('listBody').innerHTML='<div class="spinner"></div>';
+  const { data, error } = await sb.from('shipments').select('*').order('created_at',{ascending:false});
+  if (error){ $('listBody').innerHTML='<div class="empty">Could not load shipments.<br><small>'+esc(error.message)+'</small></div>'; return; }
+  SHIPMENTS = data||[];
+  renderStats(); renderList();
+}
+function renderStats(){
+  const now=new Date(), m=now.getMonth(), y=now.getFullYear();
+  $('stTotal').textContent=SHIPMENTS.length;
+  $('stActive').textContent=SHIPMENTS.filter(s=>slug(s.status)!=='delivered').length;
+  $('stDelivered').textContent=SHIPMENTS.filter(s=>slug(s.status)==='delivered').length;
+  $('stMonth').textContent=SHIPMENTS.filter(s=>{const d=new Date(s.created_at);return d.getMonth()===m&&d.getFullYear()===y;}).length;
+}
+function renderList(){
+  const q=$('search').value.trim().toLowerCase();
+  const rows = SHIPMENTS.filter(s=>!q || (s.code+' '+(s.client_name||'')).toLowerCase().includes(q));
+  if (!rows.length){ $('listBody').innerHTML='<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg><div>'+(SHIPMENTS.length?'No matches.':'No shipments yet — register your first client.')+'</div></div>'; return; }
+  $('listBody').innerHTML = rows.map(cardHTML).join('');
+  rows.forEach(s=>wireCard(s.id));
+}
+function statusOptions(sel){ return STAGES.map(s=>`<option ${s===sel?'selected':''}>${s}</option>`).join(''); }
+function cardHTML(s){
+  return `<div class="ship" data-id="${s.id}">
+    <div class="ship-top">
+      <div>
+        <div class="ship-code" data-copy="${esc(s.code)}">${esc(s.code)} <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></div>
+        <div class="ship-client">${esc(s.client_name||'—')}${s.client_phone?' · '+esc(s.client_phone):''}</div>
+      </div>
+      <span class="badge s-${slug(s.status)}"><span class="dot"></span>${esc(s.status)}</span>
+    </div>
+    <div class="ship-route">${esc(s.origin||'—')} <span class="arrow">→</span> ${esc(s.destination||'—')}<span class="pt">${esc(s.piano_type||'Piano')}</span></div>
+    <div class="ship-update">
+      <div class="field"><label>Update status</label><select class="u-status">${statusOptions(s.status)}</select></div>
+      <div class="field"><label>Current location (optional)</label><input class="u-loc" placeholder="e.g. Southampton, UK"></div>
+      <div class="field"><label>Note (optional)</label><input class="u-note" placeholder="e.g. Cleared customs"></div>
+      <button class="btn btn-gold btn-sm u-save">Update</button>
+    </div>
+    <div class="ship-meta"><span>Est. delivery: ${s.estimated_delivery?esc(s.estimated_delivery):'—'}</span><span>Updated: ${new Date(s.updated_at).toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}</span><span>${(s.events||[]).length} updates</span></div>
+    <div class="ship-actions">
+      <button class="link-btn act-link" data-code="${esc(s.code)}">Copy track link</button>
+      <button class="link-btn act-wa" data-code="${esc(s.code)}">WhatsApp client</button>
+      <button class="link-btn del act-del" data-id="${s.id}" data-code="${esc(s.code)}">Delete</button>
+    </div>
+  </div>`;
+}
+function trackUrl(code){ return location.origin + location.pathname.replace(/admin\.html$/,'') + 'track.html?id=' + encodeURIComponent(code); }
+function wireCard(id){
+  const el=document.querySelector(`.ship[data-id="${id}"]`); if(!el) return;
+  el.querySelector('.ship-code').addEventListener('click', e=>copy(e.currentTarget.dataset.copy,'Code copied'));
+  el.querySelector('.act-link').addEventListener('click', e=>copy(trackUrl(e.target.dataset.code),'Track link copied'));
+  el.querySelector('.act-wa').addEventListener('click', e=>{ const c=e.target.dataset.code; window.open('https://wa.me/?text='+encodeURIComponent('Track your piano shipment with Move Free Logistics — code '+c+': '+trackUrl(c)),'_blank'); });
+  el.querySelector('.act-del').addEventListener('click', e=>delShipment(e.target.dataset.id, e.target.dataset.code));
+  el.querySelector('.u-save').addEventListener('click', ()=>{
+    const status=el.querySelector('.u-status').value, loc=el.querySelector('.u-loc').value.trim(), note=el.querySelector('.u-note').value.trim();
+    updateStatus(id, status, loc, note, el.querySelector('.u-save'));
+  });
+}
+
+/* ---- create ---- */
+function genCode(){ const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let s=''; for(let i=0;i<4;i++)s+=a[Math.floor(Math.random()*a.length)]; return 'MFL-'+new Date().getFullYear()+'-'+s; }
+$('newForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const btn=$('createBtn'); btn.disabled=true; btn.textContent='Creating…';
+  const f=e.target, g=n=>f.elements[n].value.trim();
+  const base={ client_name:g('client_name'), client_phone:g('client_phone'), client_address:g('client_address'),
+    piano_type:g('piano_type'), service:g('service'), origin:g('origin'), destination:g('destination'),
+    estimated_delivery:g('estimated_delivery')||null, status:'Preparing for Shipping',
+    current_location:g('origin'),
+    events:[{ date:new Date().toISOString(), title:'Preparing for shipping', location:g('origin'), desc:'Booking received and logged. Preparing your piano for shipment.' }] };
+  let created=null, lastErr=null;
+  for (let i=0;i<5;i++){
+    const row={ ...base, code:genCode() };
+    const { data, error } = await sb.from('shipments').insert(row).select().single();
+    if (!error){ created=data; break; }
+    lastErr=error; if (error.code!=='23505') break; // retry only on duplicate code
+  }
+  btn.disabled=false; btn.textContent='Generate Tracking Code';
+  if (!created){ toast('Error: '+(lastErr?.message||'could not create'),1); return; }
+  f.reset();
+  const c=created.code, url=trackUrl(c);
+  $('newCode').textContent=c;
+  $('copyCode').onclick=()=>copy(c,'Code copied');
+  $('copyLink').onclick=()=>copy(url,'Track link copied');
+  $('waShare').href='https://wa.me/?text='+encodeURIComponent('Your Move Free Logistics tracking code is '+c+'. Track it here: '+url);
+  $('created').classList.add('show');
+  toast('Shipment created — code '+c);
+  loadShipments();
+});
+
+/* ---- update status ---- */
+async function updateStatus(id, status, loc, note, btn){
+  const rec=SHIPMENTS.find(s=>s.id===id); if(!rec) return;
+  btn.disabled=true; btn.textContent='…';
+  const events=Array.isArray(rec.events)?rec.events.slice():[];
+  events.push({ date:new Date().toISOString(), title:status, location:loc||rec.current_location||'', desc:note||'' });
+  const patch={ status, events, updated_at:new Date().toISOString() };
+  if (loc) patch.current_location=loc;
+  const { error } = await sb.from('shipments').update(patch).eq('id', id);
+  btn.disabled=false; btn.textContent='Update';
+  if (error){ toast('Update failed: '+error.message,1); return; }
+  toast('Status updated → '+status);
+  loadShipments();
+}
+/* ---- delete ---- */
+async function delShipment(id, code){
+  if (!confirm('Delete shipment '+code+'? This cannot be undone.')) return;
+  const { error } = await sb.from('shipments').delete().eq('id', id);
+  if (error){ toast('Delete failed: '+error.message,1); return; }
+  toast('Shipment '+code+' deleted'); loadShipments();
+}
+$('search').addEventListener('input', renderList);
+$('refresh').addEventListener('click', loadShipments);
+</script>
+</body>
+</html>
