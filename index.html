@@ -1388,17 +1388,48 @@ function setupAutocomplete(input){
 }
 document.querySelectorAll('.ac-input').forEach(setupAutocomplete);
 
-/* ===== form ===== */
+/* ===== form — emails submissions via FormSubmit ===== */
 const form = document.getElementById('quoteForm');
-form.addEventListener('submit', (e) => {
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/movefreelogistics@gmail.com';
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
   ['name','email','phone','delivery'].forEach(n => {
     const el = form.elements[n];
     el.setCustomValidity(el.value.trim() ? '' : 'This field is required');
   });
   if (!form.reportValidity()) return;
-  form.style.display = 'none';
-  document.getElementById('formSuccess').classList.add('show');
+
+  const btn = form.querySelector('button[type="submit"]');
+  const orig = btn.innerHTML;
+  btn.disabled = true; btn.textContent = 'Sending…';
+  const v = n => (form.elements[n].value || '').trim();
+  const payload = {
+    _subject: 'New Piano Quote Request — ' + (v('name') || 'Website'),
+    _template: 'table',
+    _captcha: 'false',
+    Name: v('name'),
+    Email: v('email'),
+    Phone: v('phone'),
+    'Piano Type': v('pianoType'),
+    'Pickup Location': v('pickup'),
+    'Delivery Location': v('delivery'),
+    'Move Date': v('moveDate'),
+    Message: v('message')
+  };
+  try {
+    const res = await fetch(FORM_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || (data.success !== true && data.success !== 'true')) throw new Error(data.message || 'send failed');
+    form.style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+  } catch (err) {
+    btn.disabled = false; btn.innerHTML = orig;
+    alert('Sorry — your request could not be sent right now. Please message us on WhatsApp at +1 (479) 345-1148 and we’ll help straight away.');
+  }
 });
 </script>
 </body>
