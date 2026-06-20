@@ -461,12 +461,14 @@ section{position:relative}
   box-shadow:0 26px 55px -20px rgba(8,14,30,.5);overflow:hidden auto;max-height:248px;display:none}
 .ac-list.show{display:block;animation:acIn .18s ease}
 @keyframes acIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
-.ac-item{padding:11px 14px;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:11px;transition:background .15s;border-bottom:1px solid var(--line-2)}
+.ac-item{padding:10px 14px;cursor:pointer;font-size:14px;display:flex;align-items:flex-start;gap:11px;transition:background .15s;border-bottom:1px solid var(--line-2)}
 .ac-item:last-child{border-bottom:none}
 .ac-item:hover,.ac-item.active{background:rgba(201,162,75,.13)}
-.ac-item svg{width:16px;height:16px;stroke:var(--gold);flex:none}
-.ac-item .ac-city{color:var(--text)}
-.ac-item .ac-city b{color:#8a6a1f;font-weight:700;background:rgba(201,162,75,.2);border-radius:3px;padding:0 1px}
+.ac-item svg{width:16px;height:16px;stroke:var(--gold);flex:none;margin-top:2px}
+.ac-item .ac-main{color:var(--text);font-weight:600;line-height:1.3}
+.ac-item .ac-sub{color:var(--muted);font-family:var(--mono);font-size:12px;line-height:1.35;margin-top:1px}
+.ac-item.ac-msg{color:var(--muted);font-family:var(--mono);font-size:12px;cursor:default}
+.ac-item.ac-msg:hover{background:none}
 .form-success{display:none;text-align:center;padding:30px 10px}
 .form-success.show{display:block}
 .form-success .circle{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--gold-bright),var(--gold));display:grid;place-items:center;margin:0 auto 20px}
@@ -1051,10 +1053,10 @@ footer{background:var(--ink);color:rgba(255,255,255,.7);padding:74px 0 30px;bord
           </div>
           <div class="form-row">
             <div class="field"><label for="f-pickup">Pickup Location</label>
-              <div class="autocomplete"><input id="f-pickup" class="ac-input" name="pickup" type="text" placeholder="Start typing a city…" autocomplete="off"><div class="ac-list" role="listbox"></div></div>
+              <div class="autocomplete"><input id="f-pickup" class="ac-input" name="pickup" type="text" placeholder="Start typing an address or city…" autocomplete="off"><div class="ac-list" role="listbox"></div></div>
             </div>
             <div class="field"><label for="f-delivery">Delivery Location <span class="req">*</span></label>
-              <div class="autocomplete"><input id="f-delivery" class="ac-input" name="delivery" type="text" placeholder="Start typing a city…" autocomplete="off" required><div class="ac-list" role="listbox"></div></div>
+              <div class="autocomplete"><input id="f-delivery" class="ac-input" name="delivery" type="text" placeholder="Start typing an address or city…" autocomplete="off" required><div class="ac-list" role="listbox"></div></div>
             </div>
           </div>
           <div class="field"><label for="f-date">Move Date</label><input id="f-date" name="moveDate" type="date"></div>
@@ -1217,8 +1219,7 @@ document.querySelectorAll('.fitem').forEach(item => {
   });
 });
 
-/* ===== form ===== */
-/* ===== location autocomplete (city, state/region, country) ===== */
+/* ===== location autocomplete — live address search via Photon (OpenStreetMap), city-list fallback ===== */
 const PLACES = [
   "New York, NY, USA","Los Angeles, CA, USA","Chicago, IL, USA","Houston, TX, USA","Phoenix, AZ, USA",
   "Philadelphia, PA, USA","San Antonio, TX, USA","San Diego, CA, USA","Dallas, TX, USA","Austin, TX, USA",
@@ -1234,37 +1235,73 @@ const PLACES = [
   "Gold Coast, QLD, Australia","Canberra, ACT, Australia","Newcastle, NSW, Australia","Hobart, TAS, Australia","Darwin, NT, Australia"
 ];
 const PIN = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>';
+const AC_COUNTRIES = ['US','GB','CA','AU']; // United States, United Kingdom, Canada, Australia
+function acFormat(p){
+  const l1 = [];
+  if (p.housenumber) l1.push(p.housenumber);
+  if (p.street) l1.push(p.street);
+  let main = l1.join(' ');
+  const city = p.city || p.town || p.village || p.locality || p.county || '';
+  if (!main) main = p.name || city || '';
+  const subParts = [];
+  if (city && city !== main) subParts.push(city);
+  if (p.state) subParts.push(p.state);
+  if (p.country) subParts.push(p.country);
+  if (p.postcode && main && l1.length) subParts.push(p.postcode);
+  const sub = subParts.join(', ');
+  return { main: main || sub, sub: main ? sub : '', full: (main && sub) ? main + ', ' + sub : (main || sub) };
+}
 function setupAutocomplete(input){
   const box = input.closest('.autocomplete');
   const list = box.querySelector('.ac-list');
-  let items = [], active = -1;
-  const esc = s => s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  let items = [], active = -1, reqId = 0, timer = null;
+  const esc = s => (s || '').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
   const close = () => { list.classList.remove('show'); list.innerHTML=''; active=-1; items=[]; };
   const choose = v => { input.value = v; input.setCustomValidity(''); close(); };
-  const open = () => {
-    const q = input.value.trim().toLowerCase();
-    if (q.length < 1){ close(); return; }
-    items = PLACES.filter(p => p.toLowerCase().includes(q)).slice(0, 6);
+  const msg = t => { list.innerHTML = `<div class="ac-item ac-msg">${esc(t)}</div>`; list.classList.add('show'); };
+  const paint = () => [...list.querySelectorAll('.ac-item:not(.ac-msg)')].forEach((el,i) => el.classList.toggle('active', i===active));
+  const draw = () => {
     if (!items.length){ close(); return; }
-    list.innerHTML = items.map(p => {
-      const i = p.toLowerCase().indexOf(q);
-      const hl = esc(p.slice(0,i)) + '<b>' + esc(p.slice(i,i+q.length)) + '</b>' + esc(p.slice(i+q.length));
-      return `<div class="ac-item" role="option">${PIN}<span class="ac-city">${hl}</span></div>`;
-    }).join('');
-    [...list.children].forEach((el,idx) => el.addEventListener('mousedown', ev => { ev.preventDefault(); choose(items[idx]); }));
-    list.classList.add('show');
+    list.innerHTML = items.map(it =>
+      `<div class="ac-item" role="option">${PIN}<div class="ac-text"><div class="ac-main">${esc(it.main)}</div>${it.sub ? `<div class="ac-sub">${esc(it.sub)}</div>` : ''}</div></div>`
+    ).join('');
+    [...list.children].forEach((el,i) => el.addEventListener('mousedown', ev => { ev.preventDefault(); choose(items[i].full); }));
+    list.classList.add('show'); active = -1;
   };
-  const paint = () => [...list.children].forEach((el,i) => el.classList.toggle('active', i===active));
-  input.addEventListener('input', open);
-  input.addEventListener('focus', () => { if (input.value.trim()) open(); });
+  const fallback = q => {
+    items = PLACES.filter(p => p.toLowerCase().includes(q)).slice(0,6)
+      .map(p => { const a = p.split(', '); return { main: a[0], sub: a.slice(1).join(', '), full: p }; });
+  };
+  const search = () => {
+    const q = input.value.trim();
+    if (q.length < 3){ close(); return; }
+    const id = ++reqId; msg('Searching addresses…');
+    fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&lang=en&limit=12`)
+      .then(r => r.json())
+      .then(d => {
+        if (id !== reqId) return;
+        const seen = new Set(); items = [];
+        for (const f of (d.features || [])){
+          if (!AC_COUNTRIES.includes((f.properties.countrycode || '').toUpperCase())) continue;
+          const it = acFormat(f.properties);
+          if (it.full && !seen.has(it.full)){ seen.add(it.full); items.push(it); }
+          if (items.length >= 6) break;
+        }
+        if (items.length){ draw(); }
+        else { fallback(q.toLowerCase()); items.length ? draw() : msg('No matches — try a city or full address'); }
+      })
+      .catch(() => { if (id !== reqId) return; fallback(q.toLowerCase()); items.length ? draw() : close(); });
+  };
+  input.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(search, 280); });
+  input.addEventListener('focus', () => { if (input.value.trim().length >= 3) search(); });
   input.addEventListener('keydown', e => {
     if (!list.classList.contains('show')) return;
     if (e.key === 'ArrowDown'){ e.preventDefault(); active = Math.min(active+1, items.length-1); paint(); }
     else if (e.key === 'ArrowUp'){ e.preventDefault(); active = Math.max(active-1, 0); paint(); }
-    else if (e.key === 'Enter' && active >= 0){ e.preventDefault(); choose(items[active]); }
+    else if (e.key === 'Enter' && active >= 0){ e.preventDefault(); choose(items[active].full); }
     else if (e.key === 'Escape'){ close(); }
   });
-  input.addEventListener('blur', () => setTimeout(close, 130));
+  input.addEventListener('blur', () => setTimeout(close, 150));
 }
 document.querySelectorAll('.ac-input').forEach(setupAutocomplete);
 
