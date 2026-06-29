@@ -26,7 +26,7 @@ python -m http.server 5500
 
 ## Before going live
 
-- The contact number is `+1 (479) 345-1148` — **WhatsApp text only** (all "call" CTAs link to `wa.me`). The contact email is `movefreelogistics@gmail.com`.
+- The contact number is `+1 (479) 345-1148` — **WhatsApp text only** (all "call" CTAs link to `wa.me`). The contact email is `movefreelogistics@outlook.com`.
 - Wire the quote form to a backend or form service (currently shows a front-end success state only).
 
 ---
